@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+//kill them all !!
 int choise;
 //student struct
 typedef struct Students{
