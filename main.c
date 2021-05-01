@@ -78,26 +78,7 @@ void save_in_File(){};
 //to sort the file in Alphabetical order
 void sort_file(FILE *ptr){};
 //to add student to linked list then save it in the file
-void Add_Student()
-{
-    system("cls");
-    system("color 6");
-    system("title Adding New Student .........");
-    Student add, cheek;
-    int c = 0;
-    do{
-    system("cls");
-    printf("\xB10 Choose The Student Level:\n\t\t 1- Level 1\n\t\t 2- Level 2\n\t\t 3- Level 3\n\t\t 4- Level 4\n\xB10 Enter Choise : ");
-    scanf("%d",&c);
-    }while(c>4 || c<1);
-    printf("\nEnter Student Id :");
-    scanf("%d",&add.id);
-    printf("\nEnter Student Name : ");
-    fflush(stdin);
-    gets(add.name);
-    printf("\nEnter Student ");
-
-};
+void Add_Student(){};
 //to search in the files for a student info
 void search(){};
 //updates student info form the file
