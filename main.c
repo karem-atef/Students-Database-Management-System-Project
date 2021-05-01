@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 
+//never forget stdlib, okay!
 
 int choise;
 //student struct
