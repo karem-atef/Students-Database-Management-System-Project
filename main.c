@@ -1,6 +1,10 @@
 #include <stdio.h>
+<<<<<<< HEAD
 #include <stdlib.h> // ya got it :(
                     // fine, never do it again :3
+=======
+#include <stdlib.h>
+>>>>>>> a8750f4ed8ad93952eb367bc1dc206ec191d0e01
 
 int choise;
 //student struct
