@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 //never forget stdlib, okay!
+//abc
 
 int choise;
 //student struct
