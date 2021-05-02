@@ -30,7 +30,24 @@ struct Node {
 struct Node *head = NULL;
 struct Node *current = NULL;
 //insert node at the End of the linked list
-void insert(Student data){};
+void insert(Student data){
+    struct Node* newnode=( struct Node*)malloc(sizeof(newnode));
+newnode->item=data;
+if (head==NULL)
+{
+    head=newnode;
+    newnode->next=NULL;
+}
+else{
+    current=head;
+    while (current->next !=NULL)
+    {
+        current=current->next;
+    }
+    current->next=newnode;
+}
+
+};
 //delete item from the linked list
 void Remove(int key){};
 //view linked list items
