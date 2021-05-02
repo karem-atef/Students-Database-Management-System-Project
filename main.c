@@ -34,7 +34,18 @@ void insert(Student data){};
 //delete item from the linked list
 void Remove(int key){};
 //view linked list items
-void display(){};
+void display(){
+struct node*current=head;
+   if(current!=NULL)
+    {while(current!=NULL)
+    {
+        printf("\n\nID:%d\n\nName is: %s\n\n age is: %d\n level:%s \n grades:%f\n email:%s\n ",current->id,current->name,current->age,current->level,current->grades,current->email);
+        current=current->next;
+    }}else{
+    printf("There is no list yet\n");
+}
+
+};
 //to sort the linked list in Alphabetical order
 void sort(){};
 //----------------------------------------------------------------------------
