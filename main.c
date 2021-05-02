@@ -53,33 +53,39 @@ else{
 void Remove(int key){
 struct Node *temp1=head;
 struct Node *temp2=head;
-while (temp1 != NULL){                    //linked not empty
-            if((temp1->item.id)== key){ //the id is founded
-                         if(temp1==temp2){ //first node
-                                       printf("\tThe student information you deleted is\n");
-                                       printf("\tThe student Name is:%s\n",temp1->item.name);
-                                       printf("\tThe student ID is:%d\n",temp1->item.id);
-                                       printf("\tThe student grades is:%f\n",temp1->item.grades);
-                                       printf("\tThe student level is:%s\n",temp1->item.level);
-                                       printf("\tThe student Email is:%s\n",temp1->item.email);
-                            head= head->next;
+//linked not empty
+while (temp1 != NULL){
+    //the id is founded
+    if((temp1->item.id)== key){
+            //first node
+            if(temp1==temp2){
+                printf("\tThe student information you deleted is\n");
+                printf("\tThe student Name is:%s\n",temp1->item.name);
+                printf("\tThe student ID is:%d\n",temp1->item.id);
+                printf("\tThe student grades is:%f\n",temp1->item.grades);
+                printf("\tThe student level is:%s\n",temp1->item.level);
+                printf("\tThe student Email is:%s\n",temp1->item.email);
+                head= head->next;
                               free(temp1);
     }
-    else{    //not the first nod
-                                              printf("\tThe student information you deleted is\n");
-                                             printf("\tThe student Name is:%s\n",temp1->item.name);
-                                            printf("\tThe student ID is:%d\n",temp1->item.id);
-                                            printf("\tThe student grades is:%f\n",temp1->item.grades);
-                                            printf("\tThe student level is:%s\n",temp1->item.level);
-                                            printf("\tThe student Email is:%s\n",temp1->item.email);
+    //not the first nod
+    else{
+        printf("\tThe student information you deleted is\n");
+        printf("\tThe student Name is:%s\n",temp1->item.name);
+        printf("\tThe student ID is:%d\n",temp1->item.id);
+        printf("\tThe student grades is:%f\n",temp1->item.grades);
+        printf("\tThe student level is:%s\n",temp1->item.level);
+        printf("\tThe student Email is:%s\n",temp1->item.email);
     temp2->next=temp1->next;
     free(temp1);
     }return;
 }
 //temp2=temp1;
 //temp1=temp1->next;
+
+//id not founded
 else
-     {//id not founded
+     {
      printf("\tTry again,Student ID not founded..........\n");
 }
 temp2=temp1;
@@ -89,15 +95,22 @@ temp1=temp1->next;
 };
 //view linked list items
 void display(){
- current = head;
+
+   current = head;
    if(current!=NULL)
-    {while(current!=NULL)
     {
-        printf("\n\nID:%d\n\nName is: %s\n\n age is: %d\n level:%s \n grades:%f\n email:%s\n ",current->item.id,current->item.name,current->item.age,current->item.level,current->item.grades,current->item.email);
-        current=current->next;
-    }}else{
-    printf("There is no list yet\n");
-}
+    printf("Name\t\t\tId\t\tAge\t\tLevel\t\tEmail");
+        while(current!=NULL)
+            {
+                printf("\n%s\t%d\t%d\t%s\t%s\t",current->item.name,current->item.id,current->item.age,current->item.level,current->item.email);
+                display_grades(current->item.grades);
+                current=current->next;
+            }
+        }
+   else
+    {
+        printf("There is no list yet\n");
+    }
 
 };
 //to sort the linked list in Alphabetical order
@@ -128,7 +141,6 @@ void menu()
     printf("\n\n\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
     printf("\n\n\t\t1.Add New Student\n\t\t2.Update Information Of Existing Student\n\t\t3.Check The Details Of Existing Student\n\t\t4.Removing Student\n\t\t5.View Students's list\n\t\t6.Exit\n\n\n\n\n\t\t\xB10 Enter your choice: ");
     scanf("%d",&choise);
-
     switch (choise)
     {
     case 1 :Add_Student();
@@ -137,12 +149,7 @@ void menu()
     break;
     case 3 :Display_Student_Info();
     break;
-    case 4 :
-/*  int st_id;
-printf("Enter the student ID you want to delete:");
-scanf("%d",&st_id);
-Remove(st_id);*/
-        Remove_Student();
+    case 4 :Remove_Student();
     break;
     case 5 :Display_All_Info();
     break;
@@ -172,6 +179,11 @@ add_student:
         printf("\xB10 Choose The Student Level:\n\t\t 1- Level 1\n\t\t 2- Level 2\n\t\t 3- Level 3\n\t\t 4- Level 4\n\xB10 Enter Choise : ");
         scanf("%d",&level_choise);
     }while(level_choise>4 || level_choise<1);
+
+    if(level_choise==1)strcpy(add.level,"level_1");
+    else if (level_choise==2)strcpy(add.level,"level_2");
+    else if (level_choise==3)strcpy(add.level,"level_3");
+    else strcpy(add.level,"level_4");;
 
     printf("\nEnter Student Id :");
     scanf("%d",&add.id);
@@ -207,7 +219,11 @@ add_student:
      strcat(add.email,s_id);
      strcat(add.email,"@winter.com");
      delay("Saving.");
-   //  printf("Enter \n\t 1 To add another Student\n\t 2 TO Delete Student \n\t 3 To  ");
+     head->item = add;
+     head->next = NULL;
+     display();
+     printf("\n\nEnter\n\t\t 1 To Add More Student\n\t\t 2 To Delete Student\n\t\t 3 To Save \n\t\t 4 TO Exit without Saving");
+     sleep(3);
     goto add_student;
 };
 //to search in the files for a student info
@@ -230,14 +246,20 @@ void Exit()
     printf("\n\n\n\n\t\t\t\t This C Program Was developed  By :\n\n\n\t\t\t\t\t\xB10 AbdElrahman Khaled\n\n\t\t\t\t\t\xB10 Hager Mohamed\n\n\t\t\t\t\t\xB10 Karem Atef\n\n\t\t\t\t\t\xB10 Mohamed AbdElaziz\n\n\t\t\t\t\t\xB10 Mohamed Adel\n\n\n\n\n\n\n\n");
     sleep(5);
 };
+void display_grades(float arr[6])
+{   printf("[");
+    for(int i=0;i<6;i++){
+        printf("%d,",arr[i]);
+    }
+    printf("]");
+}
+
 //To delay nicely
 void delay(char word[15])
 {
     system("cls");
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t%s",word);
     sleep(1);
-    printf(".");
-     sleep(1);
     printf(".");
      sleep(1);
     printf(".");
