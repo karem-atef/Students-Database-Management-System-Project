@@ -33,7 +33,43 @@ struct Node *current = NULL;
 //insert node at the End of the linked list
 void insert(Student data){};
 //delete item from the linked list
-void Remove(int key){};
+void Remove(int key){
+struct Node *temp1=head;
+struct Node *temp2=head;
+while (temp1 != NULL){                    //linked not empty
+            if((temp1->item.id)== key){ //the id is founded
+                         if(temp1==temp2){ //first node
+                                       printf("\tThe student information you deleted is\n");
+                                       printf("\tThe student Name is:%s\n",temp1->item.name);
+                                       printf("\tThe student ID is:%d\n",temp1->item.id);
+                                       printf("\tThe student grades is:%f\n",temp1->item.grades);
+                                       printf("\tThe student level is:%s\n",temp1->item.level);
+                                       printf("\tThe student Email is:%s\n",temp1->item.email);
+                            head= head->next;
+                              free(temp1);
+    }
+    else{    //not the first nod
+                                              printf("\tThe student information you deleted is\n");
+                                             printf("\tThe student Name is:%s\n",temp1->item.name);
+                                            printf("\tThe student ID is:%d\n",temp1->item.id);
+                                            printf("\tThe student grades is:%f\n",temp1->item.grades);
+                                            printf("\tThe student level is:%s\n",temp1->item.level);
+                                            printf("\tThe student Email is:%s\n",temp1->item.email);
+    temp2->next=temp1->next;
+    free(temp1);
+    }return;
+}
+//temp2=temp1;
+//temp1=temp1->next;
+else
+     {//id not founded
+     printf("\tTry again,Student ID not founded..........\n");
+}
+temp2=temp1;
+temp1=temp1->next;
+}
+
+};
 //view linked list items
 void display(){
  current = head;
@@ -75,6 +111,7 @@ void menu()
     printf("\n\n\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
     printf("\n\n\t\t1.Add New Student\n\t\t2.Update Information Of Existing Student\n\t\t3.Check The Details Of Existing Student\n\t\t4.Removing Student\n\t\t5.View Students's list\n\t\t6.Exit\n\n\n\n\n\t\t\xB10 Enter your choice: ");
     scanf("%d",&choise);
+
     switch (choise)
     {
     case 1 :Add_Student();
@@ -83,7 +120,12 @@ void menu()
     break;
     case 3 :Display_Student_Info();
     break;
-    case 4 :Remove_Student();
+    case 4 :
+/*  int st_id;
+printf("Enter the student ID you want to delete:");
+scanf("%d",&st_id);
+Remove(st_id);*/
+        Remove_Student();
     break;
     case 5 :Display_All_Info();
     break;
