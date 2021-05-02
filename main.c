@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 int choise;
 //student struct
@@ -35,11 +36,11 @@ void insert(Student data){};
 void Remove(int key){};
 //view linked list items
 void display(){
-struct node*current=head;
+ current = head;
    if(current!=NULL)
     {while(current!=NULL)
     {
-        printf("\n\nID:%d\n\nName is: %s\n\n age is: %d\n level:%s \n grades:%f\n email:%s\n ",current->id,current->name,current->age,current->level,current->grades,current->email);
+        printf("\n\nID:%d\n\nName is: %s\n\n age is: %d\n level:%s \n grades:%f\n email:%s\n ",current->item.id,current->item.name,current->item.age,current->item.level,current->item.grades,current->item.email);
         current=current->next;
     }}else{
     printf("There is no list yet\n");
@@ -48,6 +49,12 @@ struct node*current=head;
 };
 //to sort the linked list in Alphabetical order
 void sort(){};
+//to check if the linked list is empty or not
+bool isEmpty()
+{
+    if (head ==NULL)return true;
+    return false;
+}
 //----------------------------------------------------------------------------
 //main function
 
@@ -100,7 +107,7 @@ void Add_Student()
     int level_choise = 0;
     char fname[15],s_id[10];
 
-
+add_student:
     do{
         system("cls");
         printf("\xB10 Choose The Student Level:\n\t\t 1- Level 1\n\t\t 2- Level 2\n\t\t 3- Level 3\n\t\t 4- Level 4\n\xB10 Enter Choise : ");
@@ -141,10 +148,11 @@ void Add_Student()
      strcat(add.email,s_id);
      strcat(add.email,"@winter.com");
      delay("Saving.");
-
+   //  printf("Enter \n\t 1 To add another Student\n\t 2 TO Delete Student \n\t 3 To  ");
+    goto add_student;
 };
 //to search in the files for a student info
-void search(FILE * ptr,int key){};
+bool search(FILE * ptr,int key){};
 //updates student info form the file
 void Update_Student_Info(){};
 //view student info form the file

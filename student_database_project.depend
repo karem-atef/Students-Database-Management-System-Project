@@ -1,7 +1,9 @@
 # depslib dependency file v1.0
-1619906490 source:e:\projects\student_database_project\team_work\main.c
+1619972143 source:e:\projects\student_database_project\team_work\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+	<stdbool.h>
 
 1619904291 source:d:\team_work\main.c
 	<stdio.h>
