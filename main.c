@@ -53,45 +53,56 @@ else{
 void Remove(int key){
 struct Node *temp1=head;
 struct Node *temp2=head;
-//linked not empty
-while (temp1 != NULL){
-    //the id is founded
-    if((temp1->item.id)== key){
-            //first node
-            if(temp1==temp2){
-                printf("\tThe student information you deleted is\n");
-                printf("\tThe student Name is:%s\n",temp1->item.name);
-                printf("\tThe student ID is:%d\n",temp1->item.id);
-                printf("\tThe student grades is:%f\n",temp1->item.grades);
-                printf("\tThe student level is:%s\n",temp1->item.level);
-                printf("\tThe student Email is:%s\n",temp1->item.email);
-                head= head->next;
-                              free(temp1);
-    }
-    //not the first nod
-    else{
-        printf("\tThe student information you deleted is\n");
-        printf("\tThe student Name is:%s\n",temp1->item.name);
-        printf("\tThe student ID is:%d\n",temp1->item.id);
-        printf("\tThe student grades is:%f\n",temp1->item.grades);
-        printf("\tThe student level is:%s\n",temp1->item.level);
-        printf("\tThe student Email is:%s\n",temp1->item.email);
-    temp2->next=temp1->next;
-    free(temp1);
-    }return;
-}
-//temp2=temp1;
-//temp1=temp1->next;
+if(temp1->next ==NULL){
+                                            printf("\tThe student information you deleted is\n");
+                                                printf("\t*********************************************\n");
+                                          printf("\tThe student Name is:%s\n",temp1->item.name);
+                                             printf("\tThe Age Email is:%d\n",temp1->item.age);
+                                          printf("\tThe student ID is:%d\n",temp1->item.id);
+                                         printf("\tThe student grades is:%f\n",temp1->item.grades);
+                                        printf("\tThe student level is:%s\n",temp1->item.level);
+                                        printf("\tThe student Email is:%s\n",temp1->item.email);
 
-//id not founded
-else
-     {
-     printf("\tTry again,Student ID not founded..........\n");
-}
-temp2=temp1;
-temp1=temp1->next;
-}
 
+ free(temp1);
+ head=NULL;
+}else{
+while(temp1->next !=NULL){
+ temp2=temp1;
+
+ temp1=temp1->next;
+ if(temp1->item.id ==key){
+            struct Node *temp;
+                                         printf("\tThe student information you deleted is\n");
+                                             printf("\t*********************************************\n");
+                                          printf("\tThe student Name is:%s\n",temp1->item.name);
+                                             printf("\tThe Age Email is:%d\n",temp1->item.age);
+                                          printf("\tThe student ID is:%d\n",temp1->item.id);
+                                         printf("\tThe student grades is:%f\n",temp1->item.grades);
+                                        printf("\tThe student level is:%s\n",temp1->item.level);
+                                        printf("\tThe student Email is:%s\n",temp1->item.email);
+      temp=temp1;
+      free(temp1);
+      temp2->next=temp->next;
+ }
+
+}if(temp1->next ==NULL){
+         if(temp2->item.id ==key){
+           struct Node *temp;
+                     printf("\tThe student information you deleted is\n");
+                     printf("\t*********************************************\n");
+                                          printf("\tThe student Name is:%s\n",temp2->item.name);
+                                             printf("\tThe Age Email is:%d\n",temp2->item.age);
+                                          printf("\tThe student ID is:%d\n",temp2->item.id);
+                                         printf("\tThe student grades is:%f\n",temp2->item.grades);
+                                        printf("\tThe student level is:%s\n",temp2->item.level);
+                                        printf("\tThe student Email is:%s\n",temp2->item.email);
+      temp=temp1;
+      free(temp1);
+      temp2->next=NULL;
+ }
+}
+}
 };
 //view linked list items
 void display(){
