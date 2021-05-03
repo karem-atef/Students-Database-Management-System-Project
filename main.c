@@ -114,7 +114,55 @@ void display(){
 
 };
 //to sort the linked list in Alphabetical order
-void sort(){};
+void sort(){
+    int i;
+    Student temp;
+    struct Node *ptr2=NULL;
+    struct Node *ptr=NULL;
+    for(ptr=head; ptr!=NULL; ptr=ptr->next)
+    {
+        for(ptr2=ptr->next; ptr2!=NULL; ptr2=ptr2->next)
+        {
+            i=strcmp(ptr->item.name,ptr2->item.name);
+            if(i==1)
+            {
+                //***************************swapping the data************
+                strcpy(temp.name,ptr->item.name);
+                strcpy(temp.email,ptr->item.email);
+                strcpy(temp.level,ptr->item.level);
+                temp.age=ptr->item.age;
+                for (int x=0; x<=5; x++)
+                {
+                    temp.grades[x]=ptr->item.grades[x];
+                }
+                temp.id=ptr->item.id;
+                //-------------------------------------
+                strcpy(ptr->item.name,ptr2->item.name);
+                strcpy(ptr->item.email,ptr2->item.email);
+                strcpy(ptr->item.level,ptr2->item.level);
+                ptr->item.age=ptr2->item.age;
+                for (int x=0; x<=5; x++)
+                {
+                    ptr->item.grades[x]=ptr2->item.grades[x];
+                }
+                ptr->item.id=ptr2->item.id;
+                //-------------------------------------
+                strcpy(ptr2->item.name,temp.name);
+                strcpy(ptr2->item.email,temp.email);
+                strcpy(ptr2->item.level,temp.level);
+                ptr2->item.age=temp.age;
+                for (int x=0; x<=5; x++)
+                {
+                    ptr2->item.grades[x]=temp.grades[x];
+                }
+                ptr2->item.id=temp.id;
+
+            }
+        }
+    }
+    ptr2=NULL;
+    ptr=NULL;
+};
 //to check if the linked list is empty or not
 bool isEmpty()
 {
