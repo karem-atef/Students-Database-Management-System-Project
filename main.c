@@ -51,9 +51,11 @@ else{
 };
 //delete item from the linked list
 void Remove(int key){
+    int i=0;
 struct Node *temp1=head;
 struct Node *temp2=head;
 if(temp1->next ==NULL){
+        if(temp1->item.id ==key){
                                             printf("\tThe student information you deleted is\n");
                                                 printf("\t*********************************************\n");
                                           printf("\tThe student Name is:%s\n",temp1->item.name);
@@ -66,6 +68,8 @@ if(temp1->next ==NULL){
 
  free(temp1);
  head=NULL;
+ i=1;
+        }
 }else{
 while(temp1->next !=NULL){
  temp2=temp1;
@@ -84,6 +88,7 @@ while(temp1->next !=NULL){
       temp=temp1;
       free(temp1);
       temp2->next=temp->next;
+      i=1;
  }
 
 }if(temp1->next ==NULL){
@@ -100,8 +105,12 @@ while(temp1->next !=NULL){
       temp=temp1;
       free(temp1);
       temp2->next=NULL;
+      i=1;
  }
 }
+}
+if(i!=1){
+    printf("\tPlease,Try again!Student ID not founded..........\n" );
 }
 };
 //view linked list items
