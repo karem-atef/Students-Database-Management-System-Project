@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <conio.h>
 
-int choise;
 //student struct
 typedef struct Students{
     char name[30];
@@ -32,21 +32,23 @@ struct Node *head = NULL;
 struct Node *current = NULL;
 //insert node at the End of the linked list
 void insert(Student data){
-    struct Node* newnode=( struct Node*)malloc(sizeof(newnode));
-newnode->item=data;
-if (head==NULL)
-{
-    head=newnode;
+    struct Node* newnode=( struct Node*)malloc(sizeof(struct Node));
+    newnode->item=data;
     newnode->next=NULL;
-}
-else{
-    current=head;
-    while (current->next !=NULL)
+    struct Node *temp;
+    if (head==NULL)
     {
-        current=current->next;
+        head=newnode;
+
     }
-    current->next=newnode;
-}
+    else{
+        temp=head;
+        while (temp->next !=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+    }
 
 };
 //delete item from the linked list
@@ -56,14 +58,14 @@ struct Node *temp1=head;
 struct Node *temp2=head;
 if(temp1->next ==NULL){
         if(temp1->item.id ==key){
-                                            printf("\tThe student information you deleted is\n");
-                                                printf("\t*********************************************\n");
-                                          printf("\tThe student Name is:%s\n",temp1->item.name);
-                                             printf("\tThe Age Email is:%d\n",temp1->item.age);
-                                          printf("\tThe student ID is:%d\n",temp1->item.id);
-                                         printf("\tThe student grades is:%f\n",temp1->item.grades);
-                                        printf("\tThe student level is:%s\n",temp1->item.level);
-                                        printf("\tThe student Email is:%s\n",temp1->item.email);
+                printf("\tThe student Information you Deleted is\n");
+                printf("\t*********************************************\n");
+                printf("\tName is:%s\n",temp1->item.name);
+                printf("\tAge :%d\n",temp1->item.age);
+                printf("\tID :%d\n",temp1->item.id);
+                printf("\tGrades : ");display_grades(temp1->item.grades);
+                printf("\n\tLevel :%s\n",temp1->item.level);
+                printf("\tEmail :%s\n",temp1->item.email);
 
 
  free(temp1);
@@ -77,14 +79,14 @@ while(temp1->next !=NULL){
  temp1=temp1->next;
  if(temp1->item.id ==key){
             struct Node *temp;
-                                         printf("\tThe student information you deleted is\n");
-                                             printf("\t*********************************************\n");
-                                          printf("\tThe student Name is:%s\n",temp1->item.name);
-                                             printf("\tThe Age Email is:%d\n",temp1->item.age);
-                                          printf("\tThe student ID is:%d\n",temp1->item.id);
-                                         printf("\tThe student grades is:%f\n",temp1->item.grades);
-                                        printf("\tThe student level is:%s\n",temp1->item.level);
-                                        printf("\tThe student Email is:%s\n",temp1->item.email);
+               printf("\tThe student Information you Deleted is\n");
+                printf("\t*********************************************\n");
+                printf("\tName is:%s\n",temp1->item.name);
+                printf("\tAge :%d\n",temp1->item.age);
+                printf("\tID :%d\n",temp1->item.id);
+                printf("\tGrades : ");display_grades(temp1->item.grades);
+                printf("\n\tLevel :%s\n",temp1->item.level);
+                printf("\tEmail :%s\n",temp1->item.email);
       temp=temp1;
       free(temp1);
       temp2->next=temp->next;
@@ -94,14 +96,14 @@ while(temp1->next !=NULL){
 }if(temp1->next ==NULL){
          if(temp2->item.id ==key){
            struct Node *temp;
-                     printf("\tThe student information you deleted is\n");
-                     printf("\t*********************************************\n");
-                                          printf("\tThe student Name is:%s\n",temp2->item.name);
-                                             printf("\tThe Age Email is:%d\n",temp2->item.age);
-                                          printf("\tThe student ID is:%d\n",temp2->item.id);
-                                         printf("\tThe student grades is:%f\n",temp2->item.grades);
-                                        printf("\tThe student level is:%s\n",temp2->item.level);
-                                        printf("\tThe student Email is:%s\n",temp2->item.email);
+                     printf("\tThe student Information you Deleted is\n");
+                printf("\t*********************************************\n");
+                printf("\tName is:%s\n",temp1->item.name);
+                printf("\tAge :%d\n",temp1->item.age);
+                printf("\tID :%d\n",temp1->item.id);
+                printf("\tGrades : ");display_grades(temp1->item.grades);
+                printf("\n\tLevel :%s\n",temp1->item.level);
+                printf("\tEmail :%s\n",temp1->item.email);
       temp=temp1;
       free(temp1);
       temp2->next=NULL;
@@ -115,16 +117,15 @@ if(i!=1){
 };
 //view linked list items
 void display(){
-
-   current = head;
-   if(current!=NULL)
-    {
-    printf("Name\t\t\tId\t\tAge\t\tLevel\t\tEmail");
-        while(current!=NULL)
+   struct Node *ptr = head;
+   if(ptr!=NULL)
+    {   printf("\n\n\t\xB10\xB10\xB10\xB10\xB10\xB10\xB10 Enterd Data \xB11\xB11\xB11\xB11\xB11\xB11\xB11");
+        while(ptr!=NULL)
             {
-                printf("\n%s\t%d\t%d\t%s\t%s\t",current->item.name,current->item.id,current->item.age,current->item.level,current->item.email);
-                display_grades(current->item.grades);
-                current=current->next;
+                printf("\nName : %s\nId : %d\nAge : %d\nLevel : %s\nEmail : %s\nGrades : ",ptr->item.name,ptr->item.id,ptr->item.age,ptr->item.level,ptr->item.email);
+                display_grades(ptr->item.grades);
+                ptr=ptr->next;
+                printf("\n----------------------------------------------------------------------------------------------------------");
             }
         }
    else
@@ -184,11 +185,41 @@ void sort(){
     ptr=NULL;
 };
 //to check if the linked list is empty or not
-bool isEmpty()
+bool search_List(int key)
 {
-    if (head ==NULL)return true;
-    return false;
+     struct Node* temp = head;
+        while(temp!=NULL)
+        {
+            if(temp->item.id==key)return true;
+            temp = temp->next;
+        }
+        return false;
 }
+//----------------------------------------------------------------------------
+//functions prototype
+void menu();
+//to save linked list nodes in the file
+void save_in_File();
+//to sort the file in Alphabetical order
+void sort_file(FILE *ptr);
+//to add student to linked list then save it in the file
+void Add_Student();
+//search in files
+bool search(FILE * ptr,int key);
+//updates student info form the file
+void Update_Student_Info();
+//view student info form the file
+void Display_Student_Info();
+//delete student info from the file
+void Remove_Student();
+//view all student info from the files
+void Display_All_Info();
+//To delay nicely
+void delay(char word[15]);
+//Exit screen function
+void Exit();
+void display_grades(float arr[6]);
+//
 //----------------------------------------------------------------------------
 //main function
 
@@ -202,6 +233,7 @@ int main(void)
 //menu function
 void menu()
 {
+    int choise;
     system("cls");
     system("color 9");
     system("title STUDENTS DATABASE MANAGEMENT SYSTEM");
@@ -227,12 +259,13 @@ void menu()
 
 }
 //to save linked list nodes in the file
-void save_in_File(){};
+void save_in_File(){}
 //to sort the file in Alphabetical order
-void sort_file(FILE *ptr){};
+void sort_file(FILE *ptr){}
 //to add student to linked list then save it in the file
 void Add_Student()
 {
+
     system("cls");
     system("color 6");
     system("title Adding New Student .........");
@@ -241,11 +274,12 @@ void Add_Student()
     int level_choise = 0;
     char fname[15],s_id[10];
 
-add_student:
+     add:
     do{
-        system("cls");
+       // system("cls");
         printf("\xB10 Choose The Student Level:\n\t\t 1- Level 1\n\t\t 2- Level 2\n\t\t 3- Level 3\n\t\t 4- Level 4\n\xB10 Enter Choise : ");
         scanf("%d",&level_choise);
+        if(level_choise>4 || level_choise<1)printf("\n\t\t\t\tInvalide !!!!!!!!\n");
     }while(level_choise>4 || level_choise<1);
 
     if(level_choise==1)strcpy(add.level,"level_1");
@@ -253,11 +287,19 @@ add_student:
     else if (level_choise==3)strcpy(add.level,"level_3");
     else strcpy(add.level,"level_4");;
 
+    Id:
     printf("\nEnter Student Id :");
     scanf("%d",&add.id);
+    if(search_List(add.id))
+        {
+            printf("\n\t Id Already Exists");
+            goto Id;
+        }
+
     /*
         if the id exists or not
     */
+
     printf("\nEnter Student Name : ");
     fflush(stdin);
     gets(add.name);
@@ -277,7 +319,6 @@ add_student:
      printf("Subject 6: ");
     scanf("%f",&add.grades[5]);
 
-
     for(int i=0;add.name[i]!=' ';i++)
     {
         fname[i]=add.name[i];
@@ -286,24 +327,45 @@ add_student:
      sprintf(s_id,"%d",add.id);
      strcat(add.email,s_id);
      strcat(add.email,"@winter.com");
-     delay("Saving.");
-     head->item = add;
-     head->next = NULL;
-     display();
-     printf("\n\nEnter\n\t\t 1 To Add More Student\n\t\t 2 To Delete Student\n\t\t 3 To Save \n\t\t 4 TO Exit without Saving");
-     sleep(3);
-    goto add_student;
-};
+     insert(add);
+     sort();
+      display();
+        int k=0;
+     do{
+        here:
+        printf("\n\n\t\t\t\t\xB10 Enter\n\t\t\t\t\t 1 To Add More Student\n\t\t\t\t\t 2 To Delete Student\n\t\t\t\t\t 3 To Save \n\t\t\t\t\t 4 TO Exit without Saving\n\t\t\t\t\xB10 Choise : ");
+        scanf("%d",&k);
+        if(k == 1)goto add;
+        else if(k == 2)
+        {
+            int key;
+            printf("\n\xB10 Enter Id To Delete :  ");
+            scanf("%d",&key);
+            Remove(key);
+            goto here;
+        }
+        else if(k ==3)
+        {
+            //save_in_File();
+            menu();
+        }
+        else if(k ==4)Exit();
+        if(k>4 || k<1)printf("\n\t\t\t\tInvalide !!!!!!!!\n");
+     }while(k >4 || k<0);
+
+
+}
+
 //to search in the files for a student info
-bool search(FILE * ptr,int key){};
+bool search(FILE * ptr,int key){return true;}
 //updates student info form the file
-void Update_Student_Info(){};
+void Update_Student_Info(){}
 //view student info form the file
-void Display_Student_Info(){};
+void Display_Student_Info(){}
 //delete student info from the file
-void Remove_Student(){};
+void Remove_Student(){}
 //view all student info from the files
-void Display_All_Info(){};
+void Display_All_Info(){}
 //Exit screen function
 void Exit()
 {
@@ -313,11 +375,11 @@ void Exit()
     delay("Ending.");
     printf("\n\n\n\n\t\t\t\t This C Program Was developed  By :\n\n\n\t\t\t\t\t\xB10 AbdElrahman Khaled\n\n\t\t\t\t\t\xB10 Hager Mohamed\n\n\t\t\t\t\t\xB10 Karem Atef\n\n\t\t\t\t\t\xB10 Mohamed AbdElaziz\n\n\t\t\t\t\t\xB10 Mohamed Adel\n\n\n\n\n\n\n\n");
     sleep(5);
-};
+}
 void display_grades(float arr[6])
 {   printf("[");
     for(int i=0;i<6;i++){
-        printf("%d,",arr[i]);
+        printf("%.1f,",arr[i]);
     }
     printf("]");
 }
