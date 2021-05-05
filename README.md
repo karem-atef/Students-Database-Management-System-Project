@@ -19,6 +19,7 @@ Students Database Management System Project
 #### void Remove(int key){}; ==> (abdo)
 #### void display(){}; ==> (hadhoud)
 #### void sort(){}; ==> (adel)
+#### void search_list(){};==>(karem)
 
 -------------------------------------------
 ### program functions
