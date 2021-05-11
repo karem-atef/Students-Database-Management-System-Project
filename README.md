@@ -28,7 +28,7 @@ Students Database Management System Project
 #### void save_in_File(){}; ==> (adel)
 #### void sort_file(FILE *ptr){}; ==> (adel)
 #### void Add_Student(){}; ==> (karem)
-#### void search(){}; ==> (hadhoud)
+#### bool search(FILE * ptr,int key){}; ==> (hadhoud)
 #### void Update_Student_Info(){}; ==> (abdo)
 #### void Display_Student_Info(){}; ==> (abdo)
 #### void Remove_Student(){}; ==> (hager)
