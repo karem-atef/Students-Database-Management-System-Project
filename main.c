@@ -199,7 +199,7 @@ bool search_List(int key)
 //functions prototype
 void menu();
 //to save linked list nodes in the file
-void save_in_File();
+void save_in_File(int );
 //to sort the file in Alphabetical order
 void sort_file(FILE *ptr);
 //to add student to linked list then save it in the file
@@ -259,7 +259,71 @@ void menu()
 
 }
 //to save linked list nodes in the file
-void save_in_File(){}
+void save_in_File(int level){
+struct Node *testPtr = head;
+
+switch (level){
+case 1: {
+        v1ptr=(fopen("student1.txt","a+"));
+        if(v1ptr==NULL) {
+                printf("\nError!\n");
+        }
+    for (; testPtr != NULL; testPtr = testPtr->next) {
+            fprintf(v1ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level ,testPtr->item.name,testPtr->item.age , testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+        }
+        fclose(v1ptr);
+        testPtr = head;
+break;
+}
+case 2: {
+            v2ptr=(fopen("student2.txt","a+"));
+        if(v2ptr==NULL) {
+                printf("\nError!\n");
+                break;
+        }
+    for (; testPtr != NULL; testPtr = testPtr->next) {
+            fprintf(v2ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level ,testPtr->item.name,testPtr->item.age , testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+        }
+        fclose(v2ptr);
+        testPtr = head;
+
+break;
+}
+
+case 3: {
+            v3ptr=(fopen("student3.txt","a+"));
+        if(v3ptr==NULL) {
+                printf("\nError!\n");
+                break;
+        }
+    for (; testPtr != NULL; testPtr = testPtr->next) {
+            fprintf(v3ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level ,testPtr->item.name,testPtr->item.age , testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+        }
+        fclose(v3ptr);
+        testPtr = head;
+
+break;
+}
+
+case 4: {
+            v4ptr=(fopen("student4.txt","a+"));
+        if(v4ptr==NULL) {
+                printf("\nError!\n");
+                break;
+        }
+    for (; testPtr != NULL; testPtr = testPtr->next) {
+            fprintf(v4ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level ,testPtr->item.name,testPtr->item.age , testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+        }
+        fclose(v4ptr);
+        testPtr = head;
+
+break;
+}
+default:
+    printf("\t\tplease, enter a valid choice\n");
+}
+}
+
 //to sort the file in Alphabetical order
 void sort_file(FILE *ptr){}
 //to add student to linked list then save it in the file
@@ -307,7 +371,7 @@ void Add_Student()
     scanf("%d",&add.age);
 
     printf("\nEnter The student Grades  (if there is no grades yet put Zeros ) :\nSubject 1: ");
-    scanf("%f",&add.grades[0]);
+     scanf("%f",&add.grades[0]);
     printf("Subject 2: ");
     scanf("%f",&add.grades[1]);
      printf("Subject 3: ");
