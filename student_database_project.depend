@@ -10,10 +10,12 @@
 	<stdio.h>
 	<stdlib.h>
 
-1619967389 source:c:\users\pc\downloads\my-github\team_work\main.c
+1622811202 source:c:\users\pc\downloads\my-github\team_work\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<stdbool.h>
+	<conio.h>
 
 1620003246 source:c:\users\dell\downloads\team\team_work\main.c
 	<stdio.h>

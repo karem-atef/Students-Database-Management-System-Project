@@ -226,7 +226,7 @@ void sort_file(FILE *ptr);
 //to add student to linked list then save it in the file
 void Add_Student();
 //search in files
-bool search(FILE * ptr,int key);
+bool search(int key);
 //updates student info form the file
 void Update_Student_Info();
 //view student info form the file
@@ -445,10 +445,97 @@ here:
 }
 
 //to search in the files for a student info
-bool search(FILE * ptr,int key)
+bool search(int key)
 {
-    return true;
-}
+
+    int id=0;
+
+char buffer[1000];
+
+
+
+if ((v1ptr=fopen("student1.txt","r")) == NULL)
+    {
+        puts("File could not be opened");
+    }
+    else
+    {
+
+        while(!feof(v1ptr))
+        {
+           fscanf(v1ptr,"%d",&id);//printf("id=%d\tkey=%d",id,key);
+            fgets(buffer,1000,v1ptr);
+            if(id==key)
+            {
+                return 1;
+            }
+        }
+         fclose(v1ptr);
+      //  rewind(v1ptr);
+    }
+    if ((v2ptr=fopen("student2.txt","r")) == NULL)
+    {
+        puts("File could not be opened");
+    }
+    else
+    {
+
+        while(!feof(v2ptr))
+        {
+           fscanf(v2ptr,"%d",&id);
+            fgets(buffer,1000,v1ptr);
+            if(id==key)
+            { //printf("%d",id);
+                return 1;
+            }
+        }
+         fclose(v2ptr);
+        //rewind(v2ptr);
+    }
+
+    if ((v3ptr=fopen("student3.txt","r")) == NULL)
+    {
+        puts("File could not be opened");
+    }
+    else
+    {
+
+        while(!feof(v3ptr))
+        {
+           fscanf(v3ptr,"%d",&id);
+            fgets(buffer,1000,v1ptr);
+                if(id==key)
+            { //printf("%d",id);
+                return 1;
+            }
+        }
+         fclose(v3ptr);
+       // rewind(v3ptr);
+    }
+    if ((v4ptr=fopen("student4.txt","r")) == NULL)
+    {
+        puts("File could not be opened");
+    }
+    else
+    {
+
+        while(!feof(v4ptr))
+        {
+           fscanf(v4ptr,"%d",&id);
+            fgets(buffer,1000,v1ptr);
+            if(id==key)
+            { //printf("%d",id);
+                return 1;
+            }
+        }
+        fclose(v4ptr);
+       // rewind(v4ptr);
+    }
+
+
+return false;
+
+    }
 //updates student info form the file
 void Update_Student_Info() {}
 //view student info form the file
