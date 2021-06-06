@@ -31,6 +31,8 @@ struct Node {
 };
 struct Node *head = NULL;
 struct Node *current = NULL;
+struct Node *head2 = NULL;
+
 //insert node at the End of the linked list
 void insert(Student data){
     struct Node* newnode=( struct Node*)malloc(sizeof(struct Node));
@@ -61,6 +63,21 @@ if(head ==NULL)
     {
         printf("\t\tList is Empty !!");
         return;
+        if(temp1->item.id ==key)
+        {
+            printf("\tThe student Information you Deleted is\n");
+            printf("\t*********************************************\n");
+            printf("\tName is:%s\n",temp1->item.name);
+            printf("\tAge :%d\n",temp1->item.age);
+            printf("\tID :%d\n",temp1->item.id);
+            printf("\tGrades : ");
+            display_grades(temp1->item.grades);
+            printf("\n\tLevel :%s\n",temp1->item.level);
+            printf("\tEmail :%s\n",temp1->item.email);
+            free(temp1);
+            head=NULL;
+            i=1;
+        }
     }
 if(temp1->next ==NULL){
         if(temp1->item.id ==key){
@@ -226,6 +243,19 @@ void Display_All_Info();
 void delay(char word[15]);
 //Exit screen function
 void Exit();
+//save in file after sorting it
+void save_in_File2();
+//inserting the data into a linked list to sort it
+void insert_node_from_file(Student);
+//sorting the data
+void sort_file_list();
+//loading the data from the file to the linked list
+void LoadFile();
+//deleting student record
+void delete_node_in_file();
+//updating student record
+void update_node_in_file();
+
 void display_grades(float arr[6]);
 //
 //----------------------------------------------------------------------------
@@ -271,22 +301,23 @@ void menu()
 void save_in_File()
 {
     struct Node *testPtr = head;
+    v1ptr=(fopen("student1.txt","a+"));
+    v2ptr=(fopen("student2.txt","a+"));
+    v2ptr=(fopen("student3.txt","a+"));
+    v2ptr=(fopen("student4.txt","a+"));
     for (; testPtr != NULL; testPtr = testPtr->next)
     {
         if (strcmp (testPtr->item.level,"level_1") == 0)
         {
-            v1ptr=(fopen("student1.txt","a+"));
             if(v1ptr==NULL)
             {
                 printf("\nError!\n");
             }
             fprintf(v1ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
-            fclose(v1ptr);
 
         }
         else if( strcmp(testPtr->item.level,"level_2") == 0)
         {
-            v2ptr=(fopen("student2.txt","a+"));
             if(v2ptr==NULL)
             {
                 printf("\nError!\n");
@@ -294,37 +325,39 @@ void save_in_File()
             fprintf(v2ptr,"%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5]);
             fclose(v2ptr);
 
+            fprintf(v2ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+
         }
 
         else if ( strcmp(testPtr->item.level,"level_3") == 0)
         {
-            v3ptr=(fopen("student3.txt","a+"));
             if(v3ptr==NULL)
             {
                 printf("\nError!\n");
             }
 
             fprintf(v3ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
-            fclose(v3ptr);
 
 
         }
 
         else if ( strcmp(testPtr->item.level,"level_4") == 0)
         {
-            v4ptr=(fopen("student4.txt","a+"));
             if(v4ptr==NULL)
             {
                 printf("\nError!\n");
             }
             fprintf(v4ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
-            fclose(v4ptr);
 
         }
 
     }
     head=NULL;
-    delay("Saving.");
+
+    fclose(v1ptr);
+    fclose(v2ptr);
+    fclose(v3ptr);
+    fclose(v4ptr);
     return ;
 }
 
@@ -558,3 +591,271 @@ void delay(char word[15])
     printf(".");
     system("cls");
 }
+
+
+
+void insert_node_from_file(Student studentInsert)
+{
+   struct Node *newNode, *last;
+    newNode=(struct Node *)malloc(sizeof(struct Node));
+    newNode->item=studentInsert;
+    if (head2 == NULL)
+    {
+        head2 = newNode;
+        newNode->next = NULL;
+    }
+    else
+    {
+        last = head2;
+        while(last->next !=NULL)
+        {
+            last = last->next;
+        }
+        last->next = newNode;
+        newNode->next = NULL;
+    }
+}
+
+
+
+
+/*function LoadFile*/
+void LoadFile()
+{
+    Student stu;
+    FILE *fPtr = fopen("student1.txt", "r");
+while (!feof(fPtr))
+    {
+                    fscanf(fPtr, "%d", &(stu.id));
+                    fscanf(fPtr, "%s", stu.level);
+                    fgets(stu.name , 20 , fPtr );
+                    fscanf(fPtr, "%d", &(stu.age));
+                    fgets(stu.email , 29 , fPtr );
+                    fscanf(fPtr, "%f", &(stu.grades[0]));
+                    fscanf(fPtr, "%f", &(stu.grades[1]));
+                    fscanf(fPtr, "%f", &(stu.grades[2]));
+                    fscanf(fPtr, "%f", &(stu.grades[3]));
+                    fscanf(fPtr, "%f", &(stu.grades[4]));
+                    fscanf(fPtr, "%f", &(stu.grades[5]));
+    insert_node_from_file(stu);
+    }
+fclose(fPtr);
+}
+
+
+void save_in_File2(void)
+{
+    struct Node *testPtr = head2;
+    v1ptr=(fopen("student1.txt","w"));
+    v2ptr=(fopen("student2.txt","w"));
+    v3ptr=(fopen("student3.txt","w"));
+    v4ptr=(fopen("student4.txt","w"));
+
+
+    for (; testPtr != NULL; testPtr = testPtr->next)
+    {
+        if (strcmp (testPtr->item.level,"level_1") == 0)
+        {
+            if(v1ptr==NULL)
+            {
+                printf("\nError!\n");
+            }
+            fprintf(v1ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+
+        }
+        else if( strcmp(testPtr->item.level,"level_2") == 0)
+        {
+            if(v2ptr==NULL)
+            {
+                printf("\nError!\n");
+            }
+            fprintf(v2ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+
+        }
+
+        else if ( strcmp(testPtr->item.level,"level_3") == 0)
+        {
+            if(v3ptr==NULL)
+            {
+                printf("\nError!\n");
+            }
+
+            fprintf(v3ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+
+
+        }
+
+        else if ( strcmp(testPtr->item.level,"level_4") == 0)
+        {
+            if(v4ptr==NULL)
+            {
+                printf("\nError!\n");
+            }
+            fprintf(v4ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+
+        }
+
+    }
+    fclose(v1ptr);
+    fclose(v2ptr);
+    fclose(v3ptr);
+    fclose(v4ptr);
+    return ;
+}
+
+void sort_file_list(void)
+{
+    int i;
+    Student temp;
+   struct Node *ptr2=NULL;
+   struct Node *ptr=NULL;
+    for(ptr=head2; ptr!=NULL; ptr=ptr->next)
+    {
+        for(ptr2=ptr->next; ptr2!=NULL; ptr2=ptr2->next)
+        {
+            i=strcmp(ptr->item.name,ptr2->item.name);
+            if(i==1)
+            {
+                //***************************swapping the data************
+                strcpy(temp.name,ptr->item.name);
+                strcpy(temp.email,ptr->item.email);
+                strcpy(temp.level,ptr->item.level);
+                temp.age=ptr->item.age;
+                for (int x=0; x<=5; x++)
+                {
+                    temp.grades[x]=ptr->item.grades[x];
+                }
+                temp.id=ptr->item.id;
+                //-------------------------------------
+                strcpy(ptr->item.name,ptr2->item.name);
+                strcpy(ptr->item.email,ptr2->item.email);
+                strcpy(ptr->item.level,ptr2->item.level);
+                ptr->item.age=ptr2->item.age;
+                for (int x=0; x<=5; x++)
+                {
+                    ptr->item.grades[x]=ptr2->item.grades[x];
+                }
+                ptr->item.id=ptr2->item.id;
+                //-------------------------------------
+                strcpy(ptr2->item.name,temp.name);
+                strcpy(ptr2->item.email,temp.email);
+                strcpy(ptr2->item.level,temp.level);
+                ptr2->item.age=temp.age;
+                for (int x=0; x<=5; x++)
+                {
+                    ptr2->item.grades[x]=temp.grades[x];
+                }
+                ptr2->item.id=temp.id;
+
+            }
+        }
+    }
+    ptr2=NULL;
+    ptr=NULL;
+}
+
+void delete_node_in_file(){
+
+struct Node *current, *previous;
+current = head2;
+previous = head2;
+int ID;
+
+printf("\nplease enter the ID of the student to remove: ");
+scanf("%d" , &ID);
+int no_value = 1;
+while(current != NULL){
+    if (current->item.id == ID){
+     no_value = 0;
+     break;
+    }
+    current = current->next;
+}
+if (no_value == 1){
+    printf("the Student not found! \n");
+    return;
+}
+current = head2;
+previous = head2;
+
+if (current->item.id == ID){
+    head = current->next;
+    free(current);
+    return;
+}
+while( current->item.id != ID){
+    previous = current;
+    current = current->next;
+}
+previous->next = current->next;
+free(current);
+printf("the student of ID: %d deleted successfully \n",ID);
+
+sort_file_list();
+}
+
+
+void update_node_in_file(){
+
+struct Node *current, *previous;
+current = head2;
+previous = head2;
+Student s;
+printf("\nenter the ID of the student to update the information: ");
+scanf("%d", &s.id);
+
+
+int no_value = 1;
+while(current != NULL){
+    if (current->item.id == s.id){
+     no_value = 0;
+     break;
+    }
+    current = current->next;
+}
+if (no_value == 1){
+    printf("the Student not found! \n");
+    return;
+}
+current = head2;
+previous = head2;
+
+printf("\nenter the new name: ");
+scanf("\n%[^\n]s", s.name);
+int level;
+    do
+    {
+    printf("\nenter the new level: ");
+    scanf("%d",&level);
+    if(level>4 || level<1)printf("\n\t\t\t\tInvalide !!!!!!!!\n");
+    }
+    while(level>4 || level<1);
+
+    if(level==1)strcpy(s.level,"level_1");
+    else if (level==2)strcpy(s.level,"level_2");
+    else if (level==3)strcpy(s.level,"level_3");
+    else strcpy(s.level,"level_4");
+
+printf("\nenter the new email: ");
+scanf("\n%[^\n]s", s.email);
+printf("\nenter the new age: ");
+scanf("%d", &s.age);
+for(int i=0;i<6;i++){
+    printf("\nenter the new grade of subject[%d]: ",i);
+    scanf("%f", &s.grades[i]);
+}
+
+if (current->item.id == s.id){
+current->item = s;
+    return;
+}
+while( current->item.id != s.id){
+    previous = current;
+    current = current->next;
+}
+
+printf("the student of ID: %d updated successfully \n",s.id);
+
+sort_file_list();
+}
+

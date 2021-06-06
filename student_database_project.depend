@@ -6,9 +6,12 @@
 	<stdbool.h>
 	<conio.h>
 
-1619904291 source:d:\team_work\main.c
+1622938652 source:d:\team_work\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
 
 1622811202 source:c:\users\pc\downloads\my-github\team_work\main.c
 	<stdio.h>
