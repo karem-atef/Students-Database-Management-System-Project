@@ -22,7 +22,17 @@ FILE * v3ptr;
 FILE * v4ptr;
 
 //--------------------------------------------------------------------------
-
+void open_files()
+{
+v1ptr =fopen("student1.txt","a+");
+fclose(v1ptr);
+v1ptr =fopen("student2.txt","a+");
+fclose(v2ptr);
+v3ptr=fopen("student3.txt","a+");
+fclose(v3ptr);
+v4ptr=fopen("student4.txt","a+");
+fclose(v4ptr);
+}
 // linked list code
 
 struct Node {
@@ -233,6 +243,7 @@ void display_grades(float arr[6]);
 
 int main(void)
 {
+    open_files();
     menu();
     return 0;
 }
