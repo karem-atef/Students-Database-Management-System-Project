@@ -63,21 +63,6 @@ if(head ==NULL)
     {
         printf("\t\tList is Empty !!");
         return;
-        if(temp1->item.id ==key)
-        {
-            printf("\tThe student Information you Deleted is\n");
-            printf("\t*********************************************\n");
-            printf("\tName is:%s\n",temp1->item.name);
-            printf("\tAge :%d\n",temp1->item.age);
-            printf("\tID :%d\n",temp1->item.id);
-            printf("\tGrades : ");
-            display_grades(temp1->item.grades);
-            printf("\n\tLevel :%s\n",temp1->item.level);
-            printf("\tEmail :%s\n",temp1->item.email);
-            free(temp1);
-            head=NULL;
-            i=1;
-        }
     }
 if(temp1->next ==NULL){
         if(temp1->item.id ==key){
@@ -221,6 +206,13 @@ bool search_List(int key)
         return false;
 }
 //----------------------------------------------------------------------------
+void insert_node_from_file(Student studentInsert);
+void LoadFile();
+void save_in_File2(void);
+void sort_file_list(void);
+void delete_node_in_file();
+void delete_node_in_file();
+//----------------------------------------------------------------------------
 //functions prototype
 void menu();
 //to save linked list nodes in the file
@@ -243,19 +235,6 @@ void Display_All_Info();
 void delay(char word[15]);
 //Exit screen function
 void Exit();
-//save in file after sorting it
-void save_in_File2();
-//inserting the data into a linked list to sort it
-void insert_node_from_file(Student);
-//sorting the data
-void sort_file_list();
-//loading the data from the file to the linked list
-void LoadFile();
-//deleting student record
-void delete_node_in_file();
-//updating student record
-void update_node_in_file();
-
 void display_grades(float arr[6]);
 //
 //----------------------------------------------------------------------------
@@ -301,23 +280,22 @@ void menu()
 void save_in_File()
 {
     struct Node *testPtr = head;
-    v1ptr=(fopen("student1.txt","a+"));
-    v2ptr=(fopen("student2.txt","a+"));
-    v2ptr=(fopen("student3.txt","a+"));
-    v2ptr=(fopen("student4.txt","a+"));
     for (; testPtr != NULL; testPtr = testPtr->next)
     {
         if (strcmp (testPtr->item.level,"level_1") == 0)
         {
+            v1ptr=(fopen("student1.txt","a+"));
             if(v1ptr==NULL)
             {
                 printf("\nError!\n");
             }
             fprintf(v1ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+            fclose(v1ptr);
 
         }
         else if( strcmp(testPtr->item.level,"level_2") == 0)
         {
+            v2ptr=(fopen("student2.txt","a+"));
             if(v2ptr==NULL)
             {
                 printf("\nError!\n");
@@ -325,39 +303,37 @@ void save_in_File()
             fprintf(v2ptr,"%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5]);
             fclose(v2ptr);
 
-            fprintf(v2ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
-
         }
 
         else if ( strcmp(testPtr->item.level,"level_3") == 0)
         {
+            v3ptr=(fopen("student3.txt","a+"));
             if(v3ptr==NULL)
             {
                 printf("\nError!\n");
             }
 
             fprintf(v3ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+            fclose(v3ptr);
 
 
         }
 
         else if ( strcmp(testPtr->item.level,"level_4") == 0)
         {
+            v4ptr=(fopen("student4.txt","a+"));
             if(v4ptr==NULL)
             {
                 printf("\nError!\n");
             }
             fprintf(v4ptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", testPtr->item.id,testPtr->item.level,testPtr->item.name,testPtr->item.age, testPtr->item.email,testPtr->item.grades[0],testPtr->item.grades[1],testPtr->item.grades[2],testPtr->item.grades[3],testPtr->item.grades[4],testPtr->item.grades[5] );
+            fclose(v4ptr);
 
         }
 
     }
     head=NULL;
-
-    fclose(v1ptr);
-    fclose(v2ptr);
-    fclose(v3ptr);
-    fclose(v4ptr);
+    delay("Saving.");
     return ;
 }
 
@@ -470,7 +446,6 @@ char buffer[1000];
 
 if ((v1ptr=fopen("student1.txt","r")) == NULL)
     {
-        puts("File could not be opened");
     }
     else
     {
@@ -489,7 +464,6 @@ if ((v1ptr=fopen("student1.txt","r")) == NULL)
     }
     if ((v2ptr=fopen("student2.txt","r")) == NULL)
     {
-        puts("File could not be opened");
     }
     else
     {
@@ -509,7 +483,6 @@ if ((v1ptr=fopen("student1.txt","r")) == NULL)
 
     if ((v3ptr=fopen("student3.txt","r")) == NULL)
     {
-        puts("File could not be opened");
     }
     else
     {
@@ -528,7 +501,6 @@ if ((v1ptr=fopen("student1.txt","r")) == NULL)
     }
     if ((v4ptr=fopen("student4.txt","r")) == NULL)
     {
-        puts("File could not be opened");
     }
     else
     {
@@ -591,8 +563,38 @@ void delay(char word[15])
     printf(".");
     system("cls");
 }
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
 
 void insert_node_from_file(Student studentInsert)
 {
@@ -800,14 +802,14 @@ void update_node_in_file(){
 struct Node *current, *previous;
 current = head2;
 previous = head2;
-Student s;
-printf("\nenter the ID of the student to update the information: ");
-scanf("%d", &s.id);
+Student edit;
+printf("\n\xB10 Enter the ID of the student to update the information: ");
+scanf("%d", &edit.id);
 
 
 int no_value = 1;
 while(current != NULL){
-    if (current->item.id == s.id){
+    if (current->item.id == edit.id){
      no_value = 0;
      break;
     }
@@ -819,43 +821,73 @@ if (no_value == 1){
 }
 current = head2;
 previous = head2;
+ char fname[15],s_id[10];
+printf("\nEnter Student name: ");
+fflush(stdin);
+scanf("%[^\n]s", edit.name);
+int level_choise;
+    add:
+    do{
 
-printf("\nenter the new name: ");
-scanf("\n%[^\n]s", s.name);
-int level;
-    do
+        printf("\n\xB10 Choose The Student Level:\n\t\t 1- Level 1\n\t\t 2- Level 2\n\t\t 3- Level 3\n\t\t 4- Level 4\n\xB10 Enter Choise : ");
+        scanf("%d",&level_choise);
+        if(level_choise>4 || level_choise<1)printf("\n\t\t\t\tInvalide !!!!!!!!\n");
+    }while(level_choise>4 || level_choise<1);
+
+    if(level_choise==1)strcpy(edit.level,"level_1");
+    else if (level_choise==2)strcpy(edit.level,"level_2");
+    else if (level_choise==3)strcpy(edit.level,"level_3");
+    else strcpy(edit.level,"level_4");;
+
+printf("\nEnter Student Age :");
+    scanf("%d",&edit.age);
+
+    printf("\nEnter The student Grades  (if there is no grades yet put Zeros ) :\nSubject 1: ");
+    scanf("%f",&edit.grades[0]);
+    printf("Subject 2: ");
+    scanf("%f",&edit.grades[1]);
+     printf("Subject 3: ");
+    scanf("%f",&edit.grades[2]);
+     printf("Subject 4: ");
+    scanf("%f",&edit.grades[3]);
+     printf("Subject 5: ");
+    scanf("%f",&edit.grades[4]);
+     printf("Subject 6: ");
+    scanf("%f",&edit.grades[5]);
+
+    for(int i=0;edit.name[i]!=' ';i++)
     {
-    printf("\nenter the new level: ");
-    scanf("%d",&level);
-    if(level>4 || level<1)printf("\n\t\t\t\tInvalide !!!!!!!!\n");
+        fname[i]=edit.name[i];
     }
-    while(level>4 || level<1);
-
-    if(level==1)strcpy(s.level,"level_1");
-    else if (level==2)strcpy(s.level,"level_2");
-    else if (level==3)strcpy(s.level,"level_3");
-    else strcpy(s.level,"level_4");
-
-printf("\nenter the new email: ");
-scanf("\n%[^\n]s", s.email);
-printf("\nenter the new age: ");
-scanf("%d", &s.age);
-for(int i=0;i<6;i++){
-    printf("\nenter the new grade of subject[%d]: ",i);
-    scanf("%f", &s.grades[i]);
-}
-
-if (current->item.id == s.id){
-current->item = s;
+     strcpy(edit.email,fname);
+     sprintf(s_id,"%d",edit.id);
+     strcat(edit.email,s_id);
+     strcat(edit.email,"@winter.com");
+if (current->item.id == edit.id){
+current->item = edit;
     return;
 }
-while( current->item.id != s.id){
+while( current->item.id != edit.id){
     previous = current;
     current = current->next;
 }
 
-printf("the student of ID: %d updated successfully \n",s.id);
+printf("the student of ID: %d updated successfully \n",edit.id);
 
 sort_file_list();
+ int main_exit;
+    view_list_invalid:
+     printf("\n\n\t\t\xB10 Enter 1 to go to the main menu and 0 to exit: ");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+            menu();
+        else if(main_exit==0)
+            Exit();
+        else
+        {
+            printf("\nInvalid!\a");
+            goto view_list_invalid;
+        }
 }
 
