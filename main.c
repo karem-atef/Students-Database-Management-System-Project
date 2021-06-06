@@ -213,8 +213,12 @@ void save_in_File();
 void Add_Student();
 //search in files
 bool search(int key);
+//updates student info form the file
+void Update_Student_Info();
 //view student info form the file
 void Display_Student_Info();
+//delete student info from the file
+void Remove_Student();
 //view all student info from the files
 void Display_All_Info();
 //To delay nicely
@@ -244,19 +248,23 @@ void menu()
     system("title STUDENTS DATABASE MANAGEMENT SYSTEM");
     printf("\n\n\t\t\t\t\t \xB10 STUDENTS DATABASE MANAGEMENT SYSTEM \xB11\n-----------------------------------------------------------------------------------------------------------------------");
     printf("\n\n\t\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
-    printf("\n\n\t\t1. Add New Student\n\n\t\t2.Check The Details Of Existing Student\n\n\t\t3. View Students's list\n\n\t\t4. Exit\n\n\n\n\n\t\t\xB10 Enter your choice: ");
+    printf("\n\n\t\t1. Add New Student\n\n\t\t2. Update Information Of Existing Student\n\n\t\t3. Check The Details Of Existing Student\n\n\t\t4. Removing Student\n\n\t\t5. View Students's list\n\n\t\t6. Exit\n\n\n\n\n\t\t\xB10 Enter your choice: ");
     scanf("%d",&choise);
     switch (choise)
     {
     case 1 :Add_Student();
     break;
-    case 2 :Display_Student_Info();
+    case 2 :Update_Student_Info();
     break;
-    case 3 :Display_All_Info();
+    case 3 :Display_Student_Info();
     break;
-    case 4 : Exit();
+    case 4 :Remove_Student();
+    break;
+    case 5 :Display_All_Info();
+    break;
+    case 6 : Exit();
     }
-    }while(choise > 4 || choise < 1);
+    }while(choise > 6 || choise < 1);
 
 }
 //to save linked list nodes in the file
@@ -425,6 +433,7 @@ char buffer[1000];
 
 if ((v1ptr=fopen("student1.txt","r")) == NULL)
     {
+        fclose(v1ptr);
     }
     else
     {
@@ -443,6 +452,7 @@ if ((v1ptr=fopen("student1.txt","r")) == NULL)
     }
     if ((v2ptr=fopen("student2.txt","r")) == NULL)
     {
+                 fclose(v2ptr);
     }
     else
     {
@@ -462,6 +472,8 @@ if ((v1ptr=fopen("student1.txt","r")) == NULL)
 
     if ((v3ptr=fopen("student3.txt","r")) == NULL)
     {
+                 fclose(v3ptr);
+
     }
     else
     {
@@ -480,6 +492,8 @@ if ((v1ptr=fopen("student1.txt","r")) == NULL)
     }
     if ((v4ptr=fopen("student4.txt","r")) == NULL)
     {
+                fclose(v4ptr);
+
     }
     else
     {
@@ -501,6 +515,148 @@ if ((v1ptr=fopen("student1.txt","r")) == NULL)
 return false;
 
     }
+//updates student info form the file
+void Update_Student_Info()
+{
+    system("cls");
+    system("color 05");
+    int view_id;
+    edit_id:
+    printf("\n\xB10 Enter Student Id : ");
+    scanf("%d",&view_id);
+    if(search(view_id)){
+        for(int i=1;i<5;i++)
+        {
+            Student stu;
+            FILE * fPtr,*newptr;
+            char buffer[1000];int test_remove=0;
+            if(i==1)
+            {
+                fPtr=fopen("student1.txt","r");
+                newptr=fopen("temp1.txt","w");
+            }
+            else if(i==2){
+                fPtr=fopen("student2.txt","r");
+                newptr=fopen("temp2.txt","w");
+            }
+            else if(i==3){
+                fPtr=fopen("student3.txt","r");
+                newptr=fopen("temp3.txt","w");
+            }
+            else{
+                fPtr=fopen("student4.txt","r");
+                newptr=fopen("temp4.txt","w");
+            }
+
+            while(!feof(fPtr)){
+                fscanf(fPtr,"%d",&stu.id);
+                fscanf(fPtr, "%s", stu.level);
+                fgets(stu.name,20,fPtr);
+                fscanf(fPtr, "%d", &(stu.age));
+                fgets(stu.email,29,fPtr);
+                fscanf(fPtr, "%f", &(stu.grades[0]));
+                fscanf(fPtr, "%f", &(stu.grades[1]));
+                fscanf(fPtr, "%f", &(stu.grades[2]));
+                fscanf(fPtr, "%f", &(stu.grades[3]));
+                fscanf(fPtr, "%f", &(stu.grades[4]));
+                fscanf(fPtr, "%f\n", &(stu.grades[5]));
+                if(view_id!=stu.id)
+                {
+                    if(stu.id!=NULL)fprintf(newptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", stu.id,stu.level,stu.name,stu.age,stu.email,stu.grades[0],stu.grades[1],stu.grades[2],stu.grades[3],stu.grades[4],stu.grades[5] );
+                }
+                else
+                {
+                    char fname[15],s_id[10];
+                    printf("\n\t\t\xB10 Enter The new Data \n-------------------------------------------------\n\n");
+                    printf("\nEnter Student Name : ");
+                    fflush(stdin);
+                    scanf("%[^\n]s",&stu.name);
+                    printf("\nEnter Student Age :");
+                    scanf("%d",&stu.age);
+                    printf("\nEnter The student Grades  (if there is no grades yet put Zeros ) :\nSubject 1: ");
+                    scanf("%f",&stu.grades[0]);
+                    printf("Subject 2: ");
+                    scanf("%f",&stu.grades[1]);
+                     printf("Subject 3: ");
+                    scanf("%f",&stu.grades[2]);
+                     printf("Subject 4: ");
+                    scanf("%f",&stu.grades[3]);
+                     printf("Subject 5: ");
+                    scanf("%f",&stu.grades[4]);
+                     printf("Subject 6: ");
+                    scanf("%f",&stu.grades[5]);
+                    for(int i=0;stu.name[i]!=' ';i++)
+                    {
+                        fname[i]=stu.name[i];
+                    }
+                     strcpy(stu.email,fname);
+                     sprintf(s_id,"%d",stu.id);
+                     strcat(stu.email,s_id);
+                     strcat(stu.email,"@winter.com");
+                    if(stu.id!=NULL)fprintf(newptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", stu.id,stu.level,stu.name,stu.age,stu.email,stu.grades[0],stu.grades[1],stu.grades[2],stu.grades[3],stu.grades[4],stu.grades[5] );
+                    }
+            }
+            stu.id=NULL;
+            fclose(fPtr);
+            fclose(newptr);
+            if(i==1)
+            {
+            fclose(v1ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student1.txt");
+            rename("temp1.txt","student1.txt");
+            }
+            else if(i==2){
+            fclose(v2ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student2.txt");
+            rename("temp2.txt","student2.txt");
+
+            }
+            else if(i==3){
+            fclose(v3ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student3.txt");
+            rename("temp3.txt","student3.txt");
+
+            }
+            else {
+            fclose(v4ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student4.txt");
+            rename("temp4.txt","student4.txt");
+
+            }
+
+        }
+        delay("Updating.");
+       printf("\n\t\xB10 Student Updating Succeded.\n\n");
+
+    }
+    else
+    {
+        printf("\n\t\t Invalid ID !!!!!");
+        goto edit_id;
+    }
+         int main_exit;
+    view_list_invalid:
+     printf("\n\n\t\t\xB10 Enter 1 to go to the main menu and 0 to exit: ");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+            menu();
+        else if(main_exit==0)
+            Exit();
+        else
+        {
+            printf("\nInvalid!\a");
+            goto view_list_invalid;
+        }
+}
 //view student info form the file
 void Display_Student_Info()
 {
@@ -545,6 +701,117 @@ void Display_Student_Info()
 
         }
     }else
+    {
+        printf("\n\t\t Invalid ID !!!!!");
+        goto edit_id;
+    }
+         int main_exit;
+    view_list_invalid:
+     printf("\n\n\t\t\xB10 Enter 1 to go to the main menu and 0 to exit: ");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+            menu();
+        else if(main_exit==0)
+            Exit();
+        else
+        {
+            printf("\nInvalid!\a");
+            goto view_list_invalid;
+        }
+}
+//delete student info from the file
+void Remove_Student()
+{
+    system("cls");
+    system("color 08");
+    int view_id;
+    edit_id:
+    printf("\n\xB10 Enter Student Id : ");
+    scanf("%d",&view_id);
+    if(search(view_id)){
+        for(int i=1;i<5;i++)
+        {
+            Student stu;
+            FILE * fPtr,*newptr;
+            char buffer[1000];int test_remove=0;
+            if(i==1)
+            {
+                fPtr=fopen("student1.txt","r");
+                newptr=fopen("temp1.txt","w");
+            }
+            else if(i==2){
+                fPtr=fopen("student2.txt","r");
+                newptr=fopen("temp2.txt","w");
+            }
+            else if(i==3){
+                fPtr=fopen("student3.txt","r");
+                newptr=fopen("temp3.txt","w");
+            }
+            else{
+                fPtr=fopen("student4.txt","r");
+                newptr=fopen("temp4.txt","w");
+            }
+
+            while(!feof(fPtr)){
+                fscanf(fPtr,"%d",&stu.id);
+                fscanf(fPtr, "%s", stu.level);
+                fgets(stu.name,20,fPtr);
+                fscanf(fPtr, "%d", &(stu.age));
+                fgets(stu.email,29,fPtr);
+                fscanf(fPtr, "%f", &(stu.grades[0]));
+                fscanf(fPtr, "%f", &(stu.grades[1]));
+                fscanf(fPtr, "%f", &(stu.grades[2]));
+                fscanf(fPtr, "%f", &(stu.grades[3]));
+                fscanf(fPtr, "%f", &(stu.grades[4]));
+                fscanf(fPtr, "%f\n", &(stu.grades[5]));
+                if(view_id!=stu.id){
+                if(stu.id!=NULL)fprintf(newptr, "%-15d%-10s%-20s%-5d%-29s%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n", stu.id,stu.level,stu.name,stu.age,stu.email,stu.grades[0],stu.grades[1],stu.grades[2],stu.grades[3],stu.grades[4],stu.grades[5] );
+
+                    }else test_remove=1;
+            }
+            stu.id=NULL;
+            fclose(fPtr);
+            fclose(newptr);
+            if(i==1)
+            {
+            fclose(v1ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student1.txt");
+            rename("temp1.txt","student1.txt");
+            }
+            else if(i==2){
+            fclose(v2ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student2.txt");
+            rename("temp2.txt","student2.txt");
+
+            }
+            else if(i==3){
+            fclose(v3ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student3.txt");
+            rename("temp3.txt","student3.txt");
+
+            }
+            else {
+            fclose(v4ptr);
+             fclose(fPtr);
+            fclose(newptr);
+            remove("student4.txt");
+            rename("temp4.txt","student4.txt");
+
+            }
+
+        }
+        delay("Deleting.");
+       printf("\n\t\xB10 Student Removeing Succeded.\n\n");
+
+    }
+    else
     {
         printf("\n\t\t Invalid ID !!!!!");
         goto edit_id;
