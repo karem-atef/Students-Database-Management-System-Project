@@ -26,7 +26,7 @@ void open_files()
 {
 v1ptr =fopen("student1.txt","a+");
 fclose(v1ptr);
-v1ptr =fopen("student2.txt","a+");
+v2ptr =fopen("student2.txt","a+");
 fclose(v2ptr);
 v3ptr=fopen("student3.txt","a+");
 fclose(v3ptr);
@@ -379,6 +379,8 @@ void Add_Student()
     printf("\nEnter Student Name : ");
     fflush(stdin);
     scanf("%[^\n]s",&add.name);
+         strcat(add.name," ");
+
     printf("\nEnter Student Age :");
     scanf("%d",&add.age);
 
@@ -794,7 +796,7 @@ void Remove_Student()
             }
             else if(i==2){
             fclose(v2ptr);
-             fclose(fPtr);
+            fclose(fPtr);
             fclose(newptr);
             remove("student2.txt");
             rename("temp2.txt","student2.txt");
